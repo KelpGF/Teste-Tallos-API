@@ -14,7 +14,7 @@ import { Employee, EmployeeSchema } from './entities/employee.entity';
     ])
   ],
   controllers: [EmployeesController],
-  providers: [EmployeesService],
-  exports: [EmployeesService]
+  providers  : [EmployeesService   ],
+  exports    : [EmployeesService   ]
 })
 export class EmployeesModule {}
