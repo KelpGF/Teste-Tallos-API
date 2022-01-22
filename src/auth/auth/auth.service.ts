@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { EmployeesService } from 'src/employees/employees.service';
 import * as bcrypt from 'bcrypt';
@@ -11,10 +11,10 @@ export class AuthService {
     const user = await this.validateCredentials(email, password);
 
     const payload = {
-      subject: user._id,
-      name: user.name,
-      email: user.email,
-      role: user.role
+      subject: user._id  ,
+      name   : user.name ,
+      email  : user.email,
+      role   : user.role
     };
 
     return this.jwtService.sign(payload);
@@ -27,6 +27,6 @@ export class AuthService {
       return user;
     }
 
-    throw new Error("Invalid Credentials");
+    throw new HttpException("Credenciais Inválidas!", HttpStatus.NOT_FOUND);
   }
 }

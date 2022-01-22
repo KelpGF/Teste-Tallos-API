@@ -10,7 +10,7 @@ import { EmployeesModule } from 'src/employees/employees.module';
 		JwtModule.register({
 			secret: "cwoi7122iasdi2",
 			signOptions: {
-				expiresIn: '60s',
+				expiresIn: '1h',
 			}
 		}),
 		EmployeesModule
