@@ -1,7 +1,6 @@
 # teste-tallos-api
 
-Este é um projeto para controle de funcionários usando Nestjs e MongoBD, solicitado pela empresa Tallos como teste admissional. O objetivo é em consumir uma API protegida pelo método de autenticação JWT e limitando as ações de cada usuário.
-
+Este é um projeto para controle de funcionários usando Nestjs e MongoBD, solicitado pela empresa Tallos como teste admissional. O objetivo é em construir uma API protegida pelo método de autenticação JWT e limitando as ações de cada usuário.
 
 ## Tecnologias utilizadas:
   - [Node.js](https://nodejs.org)
@@ -11,28 +10,32 @@ Este é um projeto para controle de funcionários usando Nestjs e MongoBD, solic
   - [MongoDB Cloud](https://www.mongodb.com/pt-br/cloud)
   - [Docker](https://www.docker.com/)
 
-
 ### Instalando as dependências e rodando o projeto:
 ```
 npm install && npm run start
-ou utilizar o docker: docker-compose up --build
-(Caso não utilizar o npm install mas também não queria ficar com os warnings do editor de códigos, você pode copiar do container o node_modules: docker cp nest-test:/app/node_modules/. ./node_modules)
 ```
-
+##### ou utilizar o docker
+```
+docker-compose up
+```
+###### (Caso não utilizar o npm install mas também não queria ficar com os warnings do editor de códigos, você pode copiar do container o node_modules)
+```
+docker cp teste-tallos-api:/app/node_modules/. ./node_modules)
+```
 
 ## Rotas das API
 
-Na nossa API somente a rota login não é protegida:
+###### Na nossa API somente a rota login não é protegida:
   - /login, para geração do token JWT (POST)
 
-Existe três níveis de acesso: admin, manager e user, em ordem de prioridade. As rotas são:
+###### Existe três níveis de acesso: admin, manager e user, em ordem de prioridade. As rotas são:
   Exclusivas ao admin:
   - /employee, para remover um funcionário (DELETE)
 
   Exclusivas ao admin e ao manager:
   - /employee, para cadastrar um funcionário (POST)
   - /employee/:id, para editar um funcionário (PATCH)
-  
+
   Liberadas para todos os níveis:
   - /user, para acessar os dados do usuário atual (GET)
   - /employee, para listar todos os funcionários (GET)

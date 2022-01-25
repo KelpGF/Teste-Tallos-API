@@ -19,7 +19,7 @@ export class EmployeesService {
   }
 
   findAll() {
-    return this.employeeModel.find().select("name wage role admission_date email");
+    return this.employeeModel.find().select("name wage role admission_date");
   }
 
   findOne(id: string) {
