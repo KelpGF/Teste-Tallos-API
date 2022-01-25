@@ -9,15 +9,13 @@ export class AuthController {
 
   @Post('login')
   async login(@Body() body) {
-    return {
-      token: await this.authService.login(body.email, body.password)
-    };
+    return await this.authService.login(body.email, body.password);
   }
 
   @UseGuards(JwtGuard)
   @Get('user')
   getUser(@Req() req) {
-    return req.user;
+    return { user: req.user };
   }
 
 }

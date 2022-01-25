@@ -1,73 +1,42 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# teste-tallos-api
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Este é um projeto para controle de funcionários usando Nestjs e MongoBD, solicitado pela empresa Tallos como teste admissional. O objetivo é em construir uma API protegida pelo método de autenticação JWT e limitando as ações de cada usuário.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Tecnologias utilizadas:
+  - [Node.js](https://nodejs.org)
+  - [NestJS](https://nestjs.com/)
+  - [NPM](https://www.npmjs.com/)
+  - [MongoDB](https://www.mongodb.com)
+  - [MongoDB Cloud](https://www.mongodb.com/pt-br/cloud)
+  - [Docker](https://www.docker.com/)
 
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
-```bash
-$ npm install
+### Instalando as dependências e rodando o projeto:
+```
+npm install && npm run start
+```
+##### ou utilizar o docker
+```
+docker-compose up
+```
+###### (Caso não utilizar o npm install mas também não queria ficar com os warnings do editor de códigos, você pode copiar do container o node_modules)
+```
+docker cp teste-tallos-api:/app/node_modules/. ./node_modules)
 ```
 
-## Running the app
+## Rotas das API
 
-```bash
-# development
-$ npm run start
+###### Na nossa API somente a rota login não é protegida:
+  - /login, para geração do token JWT (POST)
 
-# watch mode
-$ npm run start:dev
+###### Existe três níveis de acesso: admin, manager e user, em ordem de prioridade. As rotas são:
+  Exclusivas ao admin:
+  - /employee, para remover um funcionário (DELETE)
 
-# production mode
-$ npm run start:prod
-```
+  Exclusivas ao admin e ao manager:
+  - /employee, para cadastrar um funcionário (POST)
+  - /employee/:id, para editar um funcionário (PATCH)
 
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+  Liberadas para todos os níveis:
+  - /user, para acessar os dados do usuário atual (GET)
+  - /employee, para listar todos os funcionários (GET)
+  - /employee/:id, para consultar um funcionário específico (GET)

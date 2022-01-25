@@ -17,16 +17,22 @@ export class AuthService {
       role   : user.role
     };
 
-    return this.jwtService.sign(payload);
+    const token = this.jwtService.sign(payload);
+
+    return { token, user: payload };
   }
 
   async validateCredentials(email, password) {
     const user = await this.employeeService.findByCredentials(email);
 
-    if (user && bcrypt.compare(password, user.password)) {
-      return user;
-    }
-
-    throw new HttpException("Credenciais Inválidas!", HttpStatus.NOT_FOUND);
+    if (user) {
+      const isMatch = bcrypt.compareSync(password, user.password);
+  
+        if (isMatch) {
+          return user;
+        }
+      }
+  
+      throw new HttpException("Credenciais Inválidas!", HttpStatus.FORBIDDEN);
   }
 }
