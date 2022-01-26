@@ -5,23 +5,35 @@ import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { JwtGuard } from 'src/auth/auth/jwt.guard';
 import { Role } from 'src/auth/role.decorator';
 import { RoleGuard } from 'src/auth/role.guard';
-import { ApiBadRequestResponse, ApiBearerAuth, ApiBody, ApiNotFoundResponse, ApiOkResponse, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBearerAuth, ApiBody, ApiNotAcceptableResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { Employee } from './entities/employee.entity';
 
-@ApiTags('Employee')
 @UseGuards(JwtGuard, RoleGuard)
+@ApiUnauthorizedResponse({ description: 'Token inválido.'})
+@ApiBearerAuth('JWT-auth')
+@ApiTags('Employee')
 @Controller('employees')
 export class EmployeesController {
   constructor(private readonly employeesService: EmployeesService) {}
 
   @Role(['admin', 'manager'])
   @HttpCode(200)
-  @ApiTags('Employee')
-  @ApiBearerAuth('JWT-auth')
-  @ApiUnauthorizedResponse({ description: 'Token inválido.'})
   @ApiOkResponse({
     description: 'Dados do usuário cadastrado.',
     type: Employee
+  })
+  @ApiNotAcceptableResponse({
+    description: 'Dados inválidos',
+    schema: {
+      type: 'Object',
+      example: `
+        {
+          "statusCode": 400,
+          "message": "['Informe um valor válido.', 'O valor deve ter pelo menos 3 caracteres.']",
+          "error": "Not Acceptable"
+        }
+      `
+    }
   })
   @ApiBody({ type: CreateEmployeeDto })
   @Post()
@@ -30,9 +42,6 @@ export class EmployeesController {
   }
 
   @HttpCode(200)
-  @ApiTags('Employee')
-  @ApiBearerAuth('JWT-auth')
-  @ApiUnauthorizedResponse({ description: 'Token inválido.'})
   @ApiOkResponse({
     description: 'Array dos usuários registrados.',
     schema: {
@@ -57,9 +66,6 @@ export class EmployeesController {
   }
 
   @HttpCode(200)
-  @ApiTags('Employee')
-  @ApiBearerAuth('JWT-auth')
-  @ApiUnauthorizedResponse({ description: 'Token inválido.'})
   @ApiOkResponse({
     description: 'Dados do usuário consultado.',
     type: Employee
@@ -83,9 +89,6 @@ export class EmployeesController {
 
   @Role(['admin', 'manager'])
   @HttpCode(200)
-  @ApiTags('Employee')
-  @ApiBearerAuth('JWT-auth')
-  @ApiUnauthorizedResponse({ description: 'Token inválido.'})
   @ApiOkResponse({
     description: 'Dados do usuário editado.',
     type: Employee
@@ -102,6 +105,19 @@ export class EmployeesController {
       `
     }
   })
+  @ApiNotAcceptableResponse({
+    description: 'Dados inválidos',
+    schema: {
+      type: 'Object',
+      example: `
+        {
+          "statusCode": 400,
+          "message": "['Informe um valor válido.', 'O valor deve ter pelo menos 3 caracteres.']",
+          "error": "Not Acceptable"
+        }
+      `
+    }
+  })
   @ApiBody({ type: UpdateEmployeeDto })
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateEmployeeDto: UpdateEmployeeDto) {
@@ -110,9 +126,6 @@ export class EmployeesController {
 
   @Role(['admin'])
   @HttpCode(200)
-  @ApiTags('Employee')
-  @ApiBearerAuth('JWT-auth')
-  @ApiUnauthorizedResponse({ description: 'Token inválido.'})
   @ApiOkResponse({
     description: 'Quantidade de registros deletados.',
     schema: {

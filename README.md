@@ -24,6 +24,7 @@ docker cp teste-tallos-api:/app/node_modules/. ./node_modules)
 ```
 
 ## Rotas das API
+### As rotas estão documentadas no Swagger, ao iniciar a aplicação será possível ter acesso a elas. Mas abaixo temos uma prévia.
 
 ###### Na nossa API somente a rota login não é protegida:
   - /login, para geração do token JWT (POST)

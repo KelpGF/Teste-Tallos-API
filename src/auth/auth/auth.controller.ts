@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpException, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiForbiddenResponse, ApiBody, ApiTags, ApiOkResponse, ApiUnauthorizedResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { JwtGuard } from './jwt.guard';
@@ -37,7 +37,11 @@ export class AuthController {
   })
   @ApiForbiddenResponse({ description: 'Forbidden.'})
   async login(@Body() body) {
-    return await this.authService.login(body.email, body.password);
+    if (body.email && body.password) {
+      return await this.authService.login(body.email, body.password);
+    }
+    
+    throw new HttpException("Credenciais Inválidas!", HttpStatus.FORBIDDEN);
   }
 
   @UseGuards(JwtGuard)
