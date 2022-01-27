@@ -62,8 +62,16 @@ export class AuthController {
   @ApiBearerAuth('JWT-auth')
   @HttpCode(200)
   @ApiUnauthorizedResponse({ description: 'Token inválido.'})
-  getUser(@Req() req) {
-    return { user: req.user };
+  async getUser(@Req() req) {
+    const id = req.user.subject
+
+    const user = await this.authService.getDataUser(id)
+
+    return {
+      user: {
+        ...user, exp: req.user.exp, iat: req.user.iat
+      }
+    };
   }
 
 }
