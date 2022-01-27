@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { EmployeesModule } from './employees/employees.module';
 import { AuthModule } from './auth/auth.module';
+import { WebsocketService } from './websocket/websocket.service';
 
 @Module({
   imports: [
@@ -12,6 +13,6 @@ import { AuthModule } from './auth/auth.module';
     AuthModule
   ],
   controllers: [],
-  providers  : [],
+  providers  : [WebsocketService],
 })
 export class AppModule {}

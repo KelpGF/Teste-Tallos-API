@@ -32,7 +32,19 @@ export class AuthService {
           return user;
         }
       }
-  
-      throw new HttpException("Credenciais Inválidas!", HttpStatus.FORBIDDEN);
+
+    throw new HttpException("Credenciais Inválidas!", HttpStatus.FORBIDDEN);
+  }
+
+  async getDataUser(id) {
+    const user = await this.employeeService.findOne(id)
+
+    return {
+      name: user.name,
+      role: user.role,
+      email: user.email,
+      exp: 0,
+      iat: 0
+    }
   }
 }

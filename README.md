@@ -9,10 +9,11 @@ Este é um projeto para controle de funcionários usando Nestjs e MongoBD, solic
   - [MongoDB](https://www.mongodb.com)
   - [MongoDB Cloud](https://www.mongodb.com/pt-br/cloud)
   - [Docker](https://www.docker.com/)
+  - [Socket.IO](https://socket.io/)
 
 ### Instalando as dependências e rodando o projeto:
 ```
-npm install && npm run start
+npm run start:docker:dev
 ```
 ##### ou utilizar o docker
 ```
